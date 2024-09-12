@@ -33,7 +33,7 @@ jobs:
       - name: Run backend tests
         run: |
           cd backend
-          # Здесь ваша команда для запуска тестов
+          
 
   deploy:
     needs: build-and-test
@@ -45,11 +45,9 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to test environment"
-          # Команды для деплоя в тестовую среду
-
+        
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to production environment"
-          # Команды для деплоя в продакшн среду
-
+         
