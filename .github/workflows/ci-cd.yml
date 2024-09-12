@@ -29,7 +29,6 @@ jobs:
           cd frontend
           docker build -t frontend:${{ github.sha }} .
 
-      # Предположим, у вас есть тесты для бэкенда
       - name: Run backend tests
         run: |
           cd backend
