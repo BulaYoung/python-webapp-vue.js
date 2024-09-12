@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Build backend Docker image
+        run: |
+          cd backend
+          docker build -t backend:${{ github.sha }} .
+
+      - name: Build frontend Docker image
+        run: |
+          cd frontend
+          docker build -t frontend:${{ github.sha }} .
+
+      # Предположим, у вас есть тесты для бэкенда
+      - name: Run backend tests
+        run: |
+          cd backend
+          # Здесь ваша команда для запуска тестов
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy to Testing
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          echo "Deploying to test environment"
+          # Команды для деплоя в тестовую среду
+
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploying to production environment"
+          # Команды для деплоя в продакшн среду
+
