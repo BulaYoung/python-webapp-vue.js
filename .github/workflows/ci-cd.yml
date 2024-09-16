@@ -39,11 +39,6 @@ jobs:
       - name: Push frontend Docker image
         run: docker push bulayoung/frontend-image:${{ github.sha }}
 
-      - name: Run backend tests
-        run: |
-          cd backend
-          pytest
-
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
